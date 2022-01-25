@@ -1,1 +1,1 @@
-# stellar-evo-p1
+# ASTR 8200: Stellar Evolution Project 1
