@@ -39,7 +39,7 @@ def radius_mass_function(mass):
          17.84778000,
          0.00022582]
 
-    return (a[0]*mass**2.5 + a[1]*mass**6.5 + a[2]*mass**11 + a[3]*mass**19 +a[4]*mass**19.5) / (a[5] + a[6]*mass**2 + a[7]*mass**8.5 + a[8]*mass**18.5 + a[9]*mass**19.5)
+    return (a[0]*mass**2.5 + a[1]*mass**6.5 + a[2]*mass**11 + a[3]*mass**19 + a[4]*mass**19.5) / (a[5] + a[6]*mass**2 + a[7]*mass**8.5 + a[8]*mass**18.5 + a[9]*mass**19.5)
 
 
 if __name__ == '__main__':

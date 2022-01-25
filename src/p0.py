@@ -3,19 +3,20 @@ import matplotlib.pyplot as plt
 import scipy.constants as pc
 import scipy as sp
 
+
 def planck_function(nu, T):
     '''
     Planck function definition.
     nu: Filter wavelength.
     T: temperature.
     '''
-    
+
     h = pc.Planck
     k = pc.Boltzmann
     c = pc.speed_of_light
 
-    exponent = ( h * c ) / ( nu * k * T )
-    B = ( 2.0 * h * c**2 ) / nu**5 * 1.0 / ( np.e**exponent - 1.0 )
+    exponent = (h * c) / (nu * k * T)
+    B = (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
 
     return B
 
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     UB = -2.5 * np.log(U/B)
     UV = -2.5 * np.log(U/V)
 
-    # Add Sun CI info.
+    # Add Solar CI info.
     B_Sun = planck_function(4.45e-7, 5772)
     V_Sun = planck_function(5.51e-7, 5772)
     BV_Sun = -2.5 * np.log(B_Sun/V_Sun)
