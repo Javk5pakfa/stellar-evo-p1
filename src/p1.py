@@ -43,6 +43,4 @@ def radius_mass_function(mass):
 
 
 if __name__ == '__main__':
-    print('yo mama')
-
-    print(luminosity_mass_function(1))
+    pass
