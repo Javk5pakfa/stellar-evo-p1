@@ -4,6 +4,23 @@ import scipy.constants as pc
 import scipy as sp
 
 
+def planck_function(nu, T):
+    '''
+    Planck function definition.
+    nu: Filter wavelength.
+    T: temperature.
+    '''
+
+    h = pc.Planck
+    k = pc.Boltzmann
+    c = pc.speed_of_light
+
+    exponent = (h * c) / (nu * k * T)
+    B = (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
+
+    return B
+
+
 def luminosity_mass_function(mass):
     '''
     Luminosity mass function. Tout (96) eqn (1).
