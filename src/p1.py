@@ -16,9 +16,9 @@ def planck_function(nu, T):
     c = pc.speed_of_light
 
     exponent = (h * c) / (nu * k * T)
-    B = (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
 
-    return B
+    # B
+    return (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
 
 
 def luminosity_mass_function(mass):
@@ -57,6 +57,34 @@ def radius_mass_function(mass):
          0.00022582]
 
     return (a[0]*mass**2.5 + a[1]*mass**6.5 + a[2]*mass**11 + a[3]*mass**19 + a[4]*mass**19.5) / (a[5] + a[6]*mass**2 + a[7]*mass**8.5 + a[8]*mass**18.5 + a[9]*mass**19.5)
+
+
+# The following functions come from the Inversion_Sampling.pdf document, 
+# provided by Ben Amend.
+
+
+def salpeter_initial_mass_function(alp, max_mass, min_mass=0):
+    """
+    Salpeter initial stellar mass function.
+
+    max_mass: stellar mass upper bound.
+    min_mass: stellar mass lower bound.
+    alp: weighting parameter.
+    """
+
+    return (max_mass - min_mass)**(-alp)
+
+
+def probability_density_function(imf, max_mass, min_mass=0):
+    """
+    Normalized probability density function. Normalized to 1.
+
+    imf: Initial mass function to be normalized.
+    max_mass: stellar mass upper bound.
+    min_mass: stellar mass lower bound.
+    """
+
+    pass
 
 
 if __name__ == '__main__':
