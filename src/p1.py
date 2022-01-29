@@ -64,7 +64,7 @@ def radius_mass_function(mass):
 # provided by Ben Amend.
 
 
-def salpeter_initial_mass_function(alp, max_mass, min_mass=0):
+def salpeter_initial_mass_function(mass, alp=2.35):
     """
     Salpeter initial stellar mass function.
 
@@ -73,10 +73,10 @@ def salpeter_initial_mass_function(alp, max_mass, min_mass=0):
     alp:      weighting parameter.
     """
 
-    return (max_mass - min_mass)**(-alp)
+    return mass**(-alp)
 
 
-def probability_density_function(imf, max_mass, min_mass=0):
+def probability_density_function(mass, imf, max_mass, min_mass=0):
     """
     Normalized probability density function. Normalized to 1.
 
@@ -85,7 +85,9 @@ def probability_density_function(imf, max_mass, min_mass=0):
     min_mass: stellar mass lower bound.
     """
 
-    pass
+    A = 1 / (simpsons_rule_integrate(imf, min_mass, max_mass, 100))
+
+    return A * imf(mass)
 
 
 def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
@@ -110,15 +112,30 @@ def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
     # Scheme follows defintion in Scientific Computing textbook by Heath.
     for i in steps[1:]:
         a = steps[j]
-        result += ((i - a) / 6) * (integrand(a) + 4 * integrand((a + i) / 2) + integrand(i))
+        result += ((i - a) / 6) * (integrand(a) + 4 *
+                                   integrand((a + i) / 2) + integrand(i))
         j += 1
 
     return result
 
 
-def test_function(x):
-    return x**2
+def test_function(x, alp=1):
+    return alp*x**2
 
 
 if __name__ == '__main__':
-    pass
+
+    # Define ranges for plotting
+    x_range = np.linspace(0.1, 100, 100)
+    y_range = probability_density_function(
+        x_range, salpeter_initial_mass_function, 100, 0.1)
+
+    print(type(y_range))
+
+    # Plotting schematics.
+    fig, ax = plt.subplots()
+    ax.scatter(x_range, y_range, color='green')
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+
+    plt.show()
