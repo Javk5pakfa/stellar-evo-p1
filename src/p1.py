@@ -1,3 +1,4 @@
+from matplotlib.cbook import simple_linear_interpolation
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as pc
@@ -8,7 +9,7 @@ def planck_function(nu, T):
     '''
     Planck function definition.
     nu: Filter wavelength.
-    T: temperature.
+    T:  temperature.
     '''
 
     h = pc.Planck
@@ -59,7 +60,7 @@ def radius_mass_function(mass):
     return (a[0]*mass**2.5 + a[1]*mass**6.5 + a[2]*mass**11 + a[3]*mass**19 + a[4]*mass**19.5) / (a[5] + a[6]*mass**2 + a[7]*mass**8.5 + a[8]*mass**18.5 + a[9]*mass**19.5)
 
 
-# The following functions come from the Inversion_Sampling.pdf document, 
+# The following functions come from the Inversion_Sampling.pdf document,
 # provided by Ben Amend.
 
 
@@ -69,7 +70,7 @@ def salpeter_initial_mass_function(alp, max_mass, min_mass=0):
 
     max_mass: stellar mass upper bound.
     min_mass: stellar mass lower bound.
-    alp: weighting parameter.
+    alp:      weighting parameter.
     """
 
     return (max_mass - min_mass)**(-alp)
@@ -79,7 +80,7 @@ def probability_density_function(imf, max_mass, min_mass=0):
     """
     Normalized probability density function. Normalized to 1.
 
-    imf: Initial mass function to be normalized.
+    imf:      Initial mass function to be normalized.
     max_mass: stellar mass upper bound.
     min_mass: stellar mass lower bound.
     """
@@ -110,9 +111,6 @@ def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
     for i in steps[1:]:
         a = steps[j]
         result += ((i - a) / 6) * (integrand(a) + 4 * integrand((a + i) / 2) + integrand(i))
-
-        # print("test {}".format(i))
-        # print("previous element is {}.".format(a))
         j += 1
 
     return result

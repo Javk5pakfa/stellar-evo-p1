@@ -31,13 +31,13 @@ def test_numerical_scheme(integrand, low=0, high=1, step=10):
 def plotting_scheme(x_array, y_array, y_actual):
     fig, ax = plt.subplots()
     ax.scatter(x_array, y_array, color='green')
-    ax.scatter(x_array, y_actual, color='blue')
+    ax.scatter(x_array, y_actual, color='blue', marker='v')
 
     plt.show()
 
 
 if __name__ == '__main__':
-    result, steps, num_array = test_numerical_scheme(test_function)
+    result, steps, num_array = test_numerical_scheme(test_function, step=50)
     steps = steps[1:]
     actual = []
 
