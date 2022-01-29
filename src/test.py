@@ -32,7 +32,7 @@ def plotting_scheme(x_array, y_array):
     fig, ax = plt.subplots()
     ax.scatter(x_array, y_array, color='green')
 
-    fig.show()
+    plt.show()
 
 
 if __name__ == '__main__':
