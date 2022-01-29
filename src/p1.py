@@ -87,5 +87,40 @@ def probability_density_function(imf, max_mass, min_mass=0):
     pass
 
 
+def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
+    """
+    Simpson's rule 1-D numerical integration method. It takes the target integrand, 
+    which must be an integratable function defined elsewhere that returns a 
+    numerical value, with integration bounds defined by low and high, and
+    it integrates n = step - 1 times and produces an approximate result.
+
+    integrand: function definition that represents an integratable,
+               1 dimensional function.
+    low:       lower bound of integration. Default is 0.
+    high:      upper bound of integration. Default is 1.
+    step:      number of steps for integration to take place. Default is 10 steps.
+    TODO:      Add time-keeping feature to this method.
+    """
+
+    steps = np.linspace(low, high, num=step)
+    result = 0.0
+    j = 0
+
+    # Scheme follows defintion in Scientific Computing textbook by Heath.
+    for i in steps[1:]:
+        a = steps[j]
+        result += ((i - a) / 6) * (integrand(a) + 4 * integrand((a + i) / 2) + integrand(i))
+
+        # print("test {}".format(i))
+        # print("previous element is {}.".format(a))
+        j += 1
+
+    return result
+
+
+def test_function(x):
+    return x**2
+
+
 if __name__ == '__main__':
     pass
