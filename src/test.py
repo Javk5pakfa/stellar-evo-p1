@@ -25,15 +25,23 @@ def test_numerical_scheme(integrand, low=0, high=1, step=10):
 
         j += 1
 
-    return result, step, result_array
+    return result, steps, result_array
 
 
-def plotting_scheme(x_array, y_array):
+def plotting_scheme(x_array, y_array, y_actual):
     fig, ax = plt.subplots()
     ax.scatter(x_array, y_array, color='green')
+    ax.scatter(x_array, y_actual, color='blue')
 
     plt.show()
 
 
 if __name__ == '__main__':
-    result, step, num_array = test_numerical_scheme(test_function)
+    result, steps, num_array = test_numerical_scheme(test_function)
+    steps = steps[1:]
+    actual = []
+
+    for i in steps:
+        actual.append((1 / 3) * i**3)
+
+    plotting_scheme(steps, num_array, actual)
