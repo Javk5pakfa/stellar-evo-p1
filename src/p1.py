@@ -123,14 +123,10 @@ def test_function(x, alp=1):
     return alp*x**2
 
 
-if __name__ == '__main__':
-
-    # Define ranges for plotting
-    x_range = np.linspace(0.1, 100, 100)
-    y_range = probability_density_function(
-        x_range, salpeter_initial_mass_function, 100, 0.1)
-
-    print(type(y_range))
+def plotting_scheme(x_range, y_range):
+    """
+    Takes x_range and y_range and plot Y-range to X_range.
+    """
 
     # Plotting schematics.
     fig, ax = plt.subplots()
