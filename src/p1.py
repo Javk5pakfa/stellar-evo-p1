@@ -7,6 +7,24 @@ import scipy as sp
 alp = 2.35
 
 
+def test_function(x, alp=1):
+    return alp*x**2
+
+
+def plotting_scheme(x_range, y_range):
+    """
+    Takes x_range and y_range and plot Y-range to X_range.
+    """
+
+    # Plotting schematics.
+    fig, ax = plt.subplots()
+    ax.scatter(x_range, y_range, color='green')
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+
+    plt.show()
+
+
 def planck_function(nu, T):
     '''
     Planck function definition.
@@ -118,24 +136,6 @@ def probability_density_function(mass, imf, max_mass, min_mass=0):
     A = 1 / (simpsons_rule_integrate(imf, min_mass, max_mass, 100))
 
     return A * imf(mass)
-
-
-def test_function(x, alp=1):
-    return alp*x**2
-
-
-def plotting_scheme(x_range, y_range):
-    """
-    Takes x_range and y_range and plot Y-range to X_range.
-    """
-
-    # Plotting schematics.
-    fig, ax = plt.subplots()
-    ax.scatter(x_range, y_range, color='green')
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-
-    plt.show()
 
 
 # def cumulative_distribution_function(pdf, min_mass, max_mass):
