@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import scipy.constants as pc
 import scipy as sp
 
+alp = 2.35
+
 
 def planck_function(nu, T):
     '''
@@ -64,7 +66,7 @@ def radius_mass_function(mass):
 # provided by Ben Amend.
 
 
-def salpeter_initial_mass_function(mass, alp=2.35):
+def salpeter_initial_mass_function(mass, alpha=alp):
     """
     Salpeter initial stellar mass function.
 
@@ -73,7 +75,7 @@ def salpeter_initial_mass_function(mass, alp=2.35):
     alp:      weighting parameter.
     """
 
-    return mass**(-alp)
+    return mass**(-alpha)
 
 
 def probability_density_function(mass, imf, max_mass, min_mass=0):
@@ -135,3 +137,34 @@ def plotting_scheme(x_range, y_range):
     ax.set_yscale('log')
 
     plt.show()
+
+
+# def cumulative_distribution_function(pdf, min_mass, max_mass):
+#     """TODO"""
+
+#     return simpsons_rule_integrate(pdf, min_mass, max_mass, 100)
+
+
+def cumulative_distribution_function(u, mmax, mmin, alpha=alp):
+    """
+    This version is obtained through analytical means. 
+    Credit to Ben Amend.
+
+    """
+
+    fac1 = np.power(mmax, 1.0 - alpha) - np.power(mmin, 1.0 - alpha)
+    fac2 = u * fac1 + np.power(mmin, 1.0 - alpha)
+    return np.power(fac2, 1.0 / (1.0 - alpha))
+
+
+if __name__ == '__main__':
+
+    min_mass = 0.1
+    max_mass = 100
+
+    # Define ranges for plotting
+    x_range = np.linspace(0.1, 100, 100)
+
+    test_fn = cumulative_distribution_function(x_range, min_mass, max_mass)
+
+    plotting_scheme(x_range, test_fn)
