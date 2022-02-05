@@ -171,6 +171,28 @@ def mass_sampling_function(N, mmin, mmax):
     return masses
 
 
+# ------------------------------------------------------------------------------
+# HRD of stars generated from IMF. Log L vs. Log T.
+# ------------------------------------------------------------------------------
+
+def hrd_generated_stars(n_mass, min_mass, max_mass):
+
+    # Define ranges for plotting
+    mass_list = mass_sampling_function(n_mass, min_mass, max_mass)
+    effective_temp_list = []
+    luminosity_list = []
+    for mass in mass_list:
+        effective_temp_list.append(effective_temperature(mass=mass))
+        luminosity_list.append(luminosity_mass_function(mass))
+
+    plotting_scheme(effective_temp_list,
+                    luminosity_list,
+                    x_axis='Log T (K)',
+                    y_axis='Log L (W)',
+                    invert_x=True,
+                    title='N=1000 Log L v. Log T')
+
+
 def effective_temperature(mass):
     """
     From L = 4*pi*radius^2*sigma*T^4.
