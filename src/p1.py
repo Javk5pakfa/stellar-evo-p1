@@ -164,6 +164,8 @@ if __name__ == '__main__':
 
     # Define ranges for plotting
     x_range = mass_sampling_function(n_mass, min_mass, max_mass)
-    test_fn = effective_temperature(x_range)
+    test_val_list = []
+    for mass in x_range:
+        test_val_list.append(effective_temperature(mass=mass))
 
     plotting_scheme(x_range, test_fn)
