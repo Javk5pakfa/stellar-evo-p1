@@ -267,6 +267,13 @@ def planck_function(nu, t):
     return (2.0 * h * c ** 2) / nu ** 5 * 1.0 / (np.e ** exponent - 1.0)
 
 
+def abs_mag(mass):
+    """TODO"""
+
+    return -2.5 * np.log((luminosity_mass_function(mass) *
+                          solar_lum) / zero_lum)
+
+
 def color_index_scheme(masses):
     temp_range = []
     abs_mags = []
@@ -294,12 +301,15 @@ def color_index_scheme(masses):
                     x_axis='CI',
                     y_axis='Absolute Magnitude')
 
+    ci_vs_ci(ub, uv)
 
-def abs_mag(mass):
-    """TODO"""
 
-    return -2.5 * np.log((luminosity_mass_function(mass) *
-                          solar_lum) / zero_lum)
+def ci_vs_ci(first, second):
+    plotting_scheme(first,
+                    second,
+                    title='UV vs UB',
+                    x_axis='CI_ub',
+                    y_axis='CI_uv')
 
 
 # ------------------------------------------------------------------------------
