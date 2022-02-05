@@ -302,10 +302,5 @@ if __name__ == '__main__':
     max_mass = 100
     n_mass = 1000
 
-    # Define ranges for plotting
-    x_range = mass_sampling_function(n_mass, min_mass, max_mass)
-    test_val_list = []
-    for mass in x_range:
-        test_val_list.append(effective_temperature(mass=mass))
-
-    plotting_scheme(x_range, test_val_list)
+    sampled_masses = mass_sampling_function(n_mass, min_mass, max_mass)
+    color_index_scheme(sampled_masses)
