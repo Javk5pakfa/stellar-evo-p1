@@ -1,4 +1,3 @@
-from matplotlib.cbook import simple_linear_interpolation
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as const
@@ -10,12 +9,12 @@ solar_rad = 6.957e8  # m
 
 
 def test_function(x, alp=1):
-    return alp*x**2
+    return alp * x ** 2
 
 
 def plotting_scheme(x_range,
                     y_range,
-                    options={},
+                    options=None,
                     x_axis='log x',
                     y_axis='log y',
                     title='Title',
@@ -28,6 +27,8 @@ def plotting_scheme(x_range,
     """
 
     # Plotting schematics.
+    if options is None:
+        options = {}
     fig, ax = plt.subplots()
     ax.scatter(x_range, y_range, **options)
     ax.set_xscale('log')
@@ -43,29 +44,12 @@ def plotting_scheme(x_range,
     plt.show()
 
 
-def planck_function(nu, T):
-    '''
-    Planck function definition.
-    nu: Filter wavelength.
-    T:  temperature.
-    '''
-
-    h = const.Planck
-    k = const.Boltzmann
-    c = const.speed_of_light
-
-    exponent = (h * c) / (nu * k * T)
-
-    # B
-    return (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
-
-
 def luminosity_mass_function(mass):
-    '''
+    """
     Luminosity mass function. Tout (96) eqn (1).
 
     mass: Stellar mass in solar masses.
-    '''
+    """
 
     a = [0.39704170,
          8.52762600,
@@ -75,15 +59,17 @@ def luminosity_mass_function(mass):
          0.78866060,
          0.00586685]
 
-    return (a[0]*mass**5.5 + a[1]*mass**11) / (a[2] + mass**3 + a[3]*mass**5 + a[4]*mass**7 + a[5]*mass**8 + a[6]*mass**9.5)
+    return (a[0] * mass ** 5.5 + a[1] * mass ** 11) / (
+            a[2] + mass ** 3 + a[3] * mass ** 5 + a[4] * mass ** 7 +
+            a[5] * mass ** 8 + a[6] * mass ** 9.5)
 
 
 def radius_mass_function(mass):
-    '''
+    """
     Radius mass function. Tout (96) eqn (2).
 
     mass: Stellar mass in solar masses.
-    '''
+    """
 
     a = [1.71535900,
          6.59778800,
@@ -95,21 +81,25 @@ def radius_mass_function(mass):
          17.84778000,
          0.00022582]
 
-    return (a[0]*mass**2.5 + a[1]*mass**6.5 + a[2]*mass**11 + a[3]*mass**19 + a[4]*mass**19.5) / (a[5] + a[6]*mass**2 + a[7]*mass**8.5 + mass**18.5 + a[8]*mass**19.5)
+    return (a[0] * mass ** 2.5 + a[1] * mass ** 6.5 + a[2] * mass ** 11 +
+            a[3] * mass ** 19 + a[4] * mass ** 19.5) / (
+            a[5] + a[6] * mass ** 2 + a[7] * mass ** 8.5 + mass ** 18.5 +
+            a[8] * mass ** 19.5)
 
 
 def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
     """
-    Simpson's rule 1-D numerical integration method. It takes the target integrand, 
-    which must be an integratable function defined elsewhere that returns a 
-    numerical value, with integration bounds defined by low and high, and
-    it integrates n = step - 1 times and produces an approximate result.
+    Simpson's rule 1-D numerical integration method. It takes the target
+    integrand, which must be an integrable function defined elsewhere that
+    returns a numerical value, with integration bounds defined by low and high,
+    and it integrates n = step - 1 times and produces an approximate result.
 
-    integrand: function definition that represents an integratable,
+    integrand: function definition that represents an integrable,
                1 dimensional function.
     low:       lower bound of integration. Default is 0.
     high:      upper bound of integration. Default is 1.
-    step:      number of steps for integration to take place. Default is 10 steps.
+    step:      number of steps for integration to take place. Default is
+               10 steps.
     TODO:      Add time-keeping feature to this method.
     """
 
@@ -117,7 +107,7 @@ def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
     result = 0.0
     j = 0
 
-    # Scheme follows defintion in Scientific Computing textbook by Heath.
+    # Scheme follows definition in Scientific Computing textbook by Heath.
     for i in steps[1:]:
         a = steps[j]
         result += ((i - a) / 6) * (integrand(a) + 4 *
@@ -140,7 +130,7 @@ def salpeter_initial_mass_function(mass, alpha=alp):
     alp:      weighting parameter.
     """
 
-    return mass**(-alpha)
+    return mass ** (-alpha)
 
 
 def probability_density_function(mass, imf, max_mass, min_mass=0):
@@ -193,7 +183,6 @@ def mass_sampling_function(N, mmin, mmax):
 # ------------------------------------------------------------------------------
 
 def hrd_generated_stars(n_mass, min_mass, max_mass):
-
     # Define ranges for plotting
     mass_list = mass_sampling_function(n_mass, min_mass, max_mass)
     effective_temp_list = []
@@ -205,7 +194,7 @@ def hrd_generated_stars(n_mass, min_mass, max_mass):
     plotting_scheme(effective_temp_list,
                     luminosity_list,
                     x_axis='Log T (K)',
-                    y_axis='Log L (W)',
+                    y_axis='Log L',
                     invert_x=True,
                     title='N=1000 Log L v. Log T')
 
@@ -217,9 +206,9 @@ def effective_temperature(mass):
     mass: in solar masses.
     """
 
-    return (luminosity_mass_function(mass)*solar_lum /
-            (4 * np.pi * (radius_mass_function(mass)*solar_rad)**2 *
-            const.Stefan_Boltzmann))**(1/4)
+    return (luminosity_mass_function(mass) * solar_lum /
+            (4 * np.pi * (radius_mass_function(mass) * solar_rad) ** 2 *
+             const.Stefan_Boltzmann)) ** (1 / 4)
 
 
 # ------------------------------------------------------------------------------
@@ -240,14 +229,13 @@ def planck_function(nu, T):
     exponent = (h * c) / (nu * k * T)
 
     # B
-    return (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
+    return (2.0 * h * c ** 2) / nu ** 5 * 1.0 / (np.e ** exponent - 1.0)
 
 
 if __name__ == '__main__':
-
     min_mass = 0.1
     max_mass = 100
-    n_mass = 100
+    n_mass = 1000
 
     # Define ranges for plotting
     x_range = mass_sampling_function(n_mass, min_mass, max_mass)
