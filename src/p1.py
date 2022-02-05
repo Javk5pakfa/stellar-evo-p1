@@ -13,7 +13,14 @@ def test_function(x, alp=1):
     return alp*x**2
 
 
-def plotting_scheme(x_range, y_range, options):
+def plotting_scheme(x_range,
+                    y_range,
+                    options={},
+                    x_axis='log x',
+                    y_axis='log y',
+                    title='Title',
+                    invert_x=False,
+                    invert_y=False):
     """
     Takes x_range and y_range and plot Y-range to X_range.
 
@@ -25,7 +32,14 @@ def plotting_scheme(x_range, y_range, options):
     ax.scatter(x_range, y_range, **options)
     ax.set_xscale('log')
     ax.set_yscale('log')
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
 
+    if invert_x is True:
+        ax.invert_xaxis()
+    if invert_y is True:
+        ax.invert_yaxis()
+    plt.title(title)
     plt.show()
 
 
