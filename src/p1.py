@@ -168,4 +168,4 @@ if __name__ == '__main__':
     for mass in x_range:
         test_val_list.append(effective_temperature(mass=mass))
 
-    plotting_scheme(x_range, test_fn)
+    plotting_scheme(x_range, test_val_list)
