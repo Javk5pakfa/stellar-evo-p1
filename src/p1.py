@@ -11,14 +11,16 @@ def test_function(x, alp=1):
     return alp*x**2
 
 
-def plotting_scheme(x_range, y_range):
+def plotting_scheme(x_range, y_range, options):
     """
     Takes x_range and y_range and plot Y-range to X_range.
+
+    options: a dictionary of settings.
     """
 
     # Plotting schematics.
     fig, ax = plt.subplots()
-    ax.scatter(x_range, y_range, color='green')
+    ax.scatter(x_range, y_range, **options)
     ax.set_xscale('log')
     ax.set_yscale('log')
 
