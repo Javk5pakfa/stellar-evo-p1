@@ -6,6 +6,7 @@ import random
 alp = 2.35
 solar_lum = 3.83e26  # Watts
 solar_rad = 6.957e8  # m
+zero_lum = 3.018e28  # Watts
 
 
 def test_function(x, alp=1):
@@ -47,8 +48,8 @@ def plotting_scheme_loglog(x_range,
 def plotting_scheme(x_range,
                     y_range,
                     options=None,
-                    x_axis='log x',
-                    y_axis='log y',
+                    x_axis='x',
+                    y_axis='y',
                     title='Title',
                     invert_x=False,
                     invert_y=False):
@@ -79,6 +80,7 @@ def luminosity_mass_function(mass):
     Luminosity mass function. Tout (96) eqn (1).
 
     mass: Stellar mass in solar masses.
+    returns: luminosity in solar masses.
     """
 
     a = [0.39704170,
@@ -147,9 +149,10 @@ def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
     return result
 
 
+# ------------------------------------------------------------------------------
 # The following functions come from the Inversion_Sampling.pdf document,
 # provided by Ben Amend.
-
+# ------------------------------------------------------------------------------
 
 def salpeter_initial_mass_function(mass, alpha=alp):
     """
@@ -172,9 +175,9 @@ def probability_density_function(mass, imf, max_mass, min_mass=0):
     min_mass: stellar mass lower bound.
     """
 
-    A = 1 / (simpsons_rule_integrate(imf, min_mass, max_mass, 100))
+    a = 1 / (simpsons_rule_integrate(imf, min_mass, max_mass, 100))
 
-    return A * imf(mass)
+    return a * imf(mass)
 
 
 # def cumulative_distribution_function(pdf, min_mass, max_mass):
@@ -257,6 +260,41 @@ def planck_function(nu, t):
 
     # B
     return (2.0 * h * c ** 2) / nu ** 5 * 1.0 / (np.e ** exponent - 1.0)
+
+
+def color_index_scheme(masses):
+    temp_range = []
+    abs_mags = []
+    for mass in masses:
+        temp_range.append(effective_temperature(mass))
+        abs_mags.append(abs_mag(mass))
+
+    bv = []
+    ub = []
+    uv = []
+
+    for T in temp_range:
+        u_temp = planck_function(3.65e-7, T)
+        b_temp = planck_function(4.45e-7, T)
+        v_temp = planck_function(5.51e-7, T)
+
+        bv.append(-2.5 * np.log(b_temp / v_temp))
+        ub.append(-2.5 * np.log(u_temp / b_temp))
+        uv.append(-2.5 * np.log(u_temp / v_temp))
+
+    plotting_scheme(uv,
+                    abs_mags,
+                    invert_y=True,
+                    title='Magnitude vs. CI',
+                    x_axis='CI',
+                    y_axis='Absolute Magnitude')
+
+
+def abs_mag(mass):
+    """TODO"""
+
+    return -2.5 * np.log((luminosity_mass_function(mass) *
+                          solar_lum) / zero_lum)
 
 
 if __name__ == '__main__':
