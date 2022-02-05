@@ -32,9 +32,9 @@ def planck_function(nu, T):
     T:  temperature.
     '''
 
-    h = pc.Planck
-    k = pc.Boltzmann
-    c = pc.speed_of_light
+    h = const.Planck
+    k = const.Boltzmann
+    c = const.speed_of_light
 
     exponent = (h * c) / (nu * k * T)
 
