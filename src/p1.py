@@ -200,10 +200,30 @@ def effective_temperature(mass):
     mass: in solar masses.
     """
 
-    return (luminosity_mass_function(mass) /
-            (4 * np.pi * radius_mass_function(mass) *
-            const.Stefan_Boltzmann))**(-4)
+    return (luminosity_mass_function(mass)*solar_lum /
+            (4 * np.pi * (radius_mass_function(mass)*solar_rad)**2 *
+            const.Stefan_Boltzmann))**(1/4)
 
+
+# ------------------------------------------------------------------------------
+# Color Indices Portion.
+# ------------------------------------------------------------------------------
+
+def planck_function(nu, T):
+    '''
+    Planck function definition.
+    nu: Filter wavelength.
+    T:  temperature.
+    '''
+
+    h = const.Planck
+    k = const.Boltzmann
+    c = const.speed_of_light
+
+    exponent = (h * c) / (nu * k * T)
+
+    # B
+    return (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
 
 if __name__ == '__main__':
 
