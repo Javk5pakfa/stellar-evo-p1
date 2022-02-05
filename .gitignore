@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/.idea/modules.xml
+/.idea/stellar-evo-p1.iml
+/.idea/vcs.xml
