@@ -12,6 +12,38 @@ def test_function(x, alp=1):
     return alp * x ** 2
 
 
+def plotting_scheme_loglog(x_range,
+                           y_range,
+                           options=None,
+                           x_axis='log x',
+                           y_axis='log y',
+                           title='Title',
+                           invert_x=False,
+                           invert_y=False):
+    """
+    Takes x_range and y_range and plot Y-range to X_range.
+
+    options: a dictionary of settings.
+    """
+
+    # Plotting schematics.
+    if options is None:
+        options = {}
+    fig, ax = plt.subplots()
+    ax.scatter(x_range, y_range, **options)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
+
+    if invert_x is True:
+        ax.invert_xaxis()
+    if invert_y is True:
+        ax.invert_yaxis()
+    plt.title(title)
+    plt.show()
+
+
 def plotting_scheme(x_range,
                     y_range,
                     options=None,
@@ -31,8 +63,6 @@ def plotting_scheme(x_range,
         options = {}
     fig, ax = plt.subplots()
     ax.scatter(x_range, y_range, **options)
-    ax.set_xscale('log')
-    ax.set_yscale('log')
     ax.set_xlabel(x_axis)
     ax.set_ylabel(y_axis)
 
@@ -83,8 +113,8 @@ def radius_mass_function(mass):
 
     return (a[0] * mass ** 2.5 + a[1] * mass ** 6.5 + a[2] * mass ** 11 +
             a[3] * mass ** 19 + a[4] * mass ** 19.5) / (
-            a[5] + a[6] * mass ** 2 + a[7] * mass ** 8.5 + mass ** 18.5 +
-            a[8] * mass ** 19.5)
+                   a[5] + a[6] * mass ** 2 + a[7] * mass ** 8.5 + mass ** 18.5 +
+                   a[8] * mass ** 19.5)
 
 
 def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
@@ -191,12 +221,9 @@ def hrd_generated_stars(n_mass, min_mass, max_mass):
         effective_temp_list.append(effective_temperature(mass=mass))
         luminosity_list.append(luminosity_mass_function(mass))
 
-    plotting_scheme(effective_temp_list,
-                    luminosity_list,
-                    x_axis='Log T (K)',
-                    y_axis='Log L',
-                    invert_x=True,
-                    title='N=1000 Log L v. Log T')
+    plotting_scheme_loglog(effective_temp_list, luminosity_list,
+                           x_axis='Log T (K)', y_axis='Log L',
+                           title='N=1000 Log L v. Log T', invert_x=True)
 
 
 def effective_temperature(mass):
