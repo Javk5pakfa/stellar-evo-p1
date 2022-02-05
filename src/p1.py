@@ -6,6 +6,7 @@ import random
 alp = 2.35
 solar_lum = 3.83e26  # Watts
 solar_rad = 6.957e8  # m
+solar_lifetime = 1e10  # years
 zero_lum = 3.018e28  # Watts
 
 
@@ -203,7 +204,7 @@ def cumulative_distribution_function(u, mmin, mmax, alpha=alp):
     return np.power(fac2, 1.0 / (1.0 - alpha))
 
 
-def mass_sampling_function(n, mmin, mmax):
+def cluster_generator(n, mmin, mmax):
     """TODO"""
 
     masses = []
@@ -222,7 +223,7 @@ def mass_sampling_function(n, mmin, mmax):
 
 def hrd_generated_stars(n_mass, min_mass, max_mass):
     # Define ranges for plotting
-    mass_list = mass_sampling_function(n_mass, min_mass, max_mass)
+    mass_list = cluster_generator(n_mass, min_mass, max_mass)
     effective_temp_list = []
     luminosity_list = []
     for mass in mass_list:
@@ -322,5 +323,5 @@ if __name__ == '__main__':
     max_mass = 100
     n_mass = 1000
 
-    sampled_masses = mass_sampling_function(n_mass, min_mass, max_mass)
+    sampled_masses = cluster_generator(n_mass, min_mass, max_mass)
     color_index_scheme(sampled_masses)
