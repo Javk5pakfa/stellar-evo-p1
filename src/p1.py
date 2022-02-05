@@ -144,7 +144,7 @@ def probability_density_function(mass, imf, max_mass, min_mass=0):
 #     return simpsons_rule_integrate(pdf, min_mass, max_mass, 100)
 
 
-def cumulative_distribution_function(u, mmax, mmin, alpha=alp):
+def cumulative_distribution_function(u, mmin, mmax, alpha=alp):
     """
     This version is obtained through analytical means. 
     Credit to Ben Amend.
@@ -160,10 +160,10 @@ if __name__ == '__main__':
 
     min_mass = 0.1
     max_mass = 100
+    n_mass = 100
 
     # Define ranges for plotting
-    x_range = np.linspace(0.1, 100, 100)
-
-    test_fn = cumulative_distribution_function(x_range, min_mass, max_mass)
+    x_range = mass_sampling_function(n_mass, min_mass, max_mass)
+    test_fn = effective_temperature(x_range)
 
     plotting_scheme(x_range, test_fn)
