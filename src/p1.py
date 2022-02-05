@@ -195,12 +195,12 @@ def cumulative_distribution_function(u, mmin, mmax, alpha=alp):
     return np.power(fac2, 1.0 / (1.0 - alpha))
 
 
-def mass_sampling_function(N, mmin, mmax):
+def mass_sampling_function(n, mmin, mmax):
     """TODO"""
 
     masses = []
 
-    for i in range(N):
+    for i in range(n):
         masses.append(cumulative_distribution_function(
             random.uniform(0, 1), mmin, mmax)
         )
@@ -242,18 +242,18 @@ def effective_temperature(mass):
 # Color Indices Portion.
 # ------------------------------------------------------------------------------
 
-def planck_function(nu, T):
-    '''
+def planck_function(nu, t):
+    """
     Planck function definition.
     nu: Filter wavelength.
     T:  temperature.
-    '''
+    """
 
     h = const.Planck
     k = const.Boltzmann
     c = const.speed_of_light
 
-    exponent = (h * c) / (nu * k * T)
+    exponent = (h * c) / (nu * k * t)
 
     # B
     return (2.0 * h * c ** 2) / nu ** 5 * 1.0 / (np.e ** exponent - 1.0)
