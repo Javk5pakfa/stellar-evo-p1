@@ -1,8 +1,8 @@
 from matplotlib.cbook import simple_linear_interpolation
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.constants as pc
-import scipy as sp
+import scipy.constants as const
+import random
 
 alp = 2.35
 
