@@ -5,6 +5,8 @@ import scipy.constants as const
 import random
 
 alp = 2.35
+solar_lum = 3.83e26  # Watts
+solar_rad = 6.957e8  # m
 
 
 def test_function(x, alp=1):
@@ -109,6 +111,7 @@ def simpsons_rule_integrate(integrand, low=0, high=1, step=10):
         j += 1
 
     return result
+
 
 # The following functions come from the Inversion_Sampling.pdf document,
 # provided by Ben Amend.
@@ -224,6 +227,7 @@ def planck_function(nu, T):
 
     # B
     return (2.0 * h * c**2) / nu**5 * 1.0 / (np.e**exponent - 1.0)
+
 
 if __name__ == '__main__':
 
