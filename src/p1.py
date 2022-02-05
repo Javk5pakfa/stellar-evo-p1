@@ -156,6 +156,31 @@ def cumulative_distribution_function(u, mmin, mmax, alpha=alp):
     return np.power(fac2, 1.0 / (1.0 - alpha))
 
 
+def mass_sampling_function(N, mmin, mmax):
+    """TODO"""
+
+    masses = []
+
+    for i in range(N):
+        masses.append(cumulative_distribution_function(
+            random.uniform(0, 1), mmin, mmax)
+        )
+
+    return masses
+
+
+def effective_temperature(mass):
+    """
+    From L = 4*pi*radius^2*sigma*T^4.
+
+    mass: in solar masses.
+    """
+
+    return (luminosity_mass_function(mass) /
+            (4 * np.pi * radius_mass_function(mass) *
+            const.Stefan_Boltzmann))**(-4)
+
+
 if __name__ == '__main__':
 
     min_mass = 0.1
