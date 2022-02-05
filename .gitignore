@@ -131,3 +131,4 @@ dmypy.json
 /.idea/stellar-evo-p1.iml
 /.idea/vcs.xml
 /.idea/.gitignore
+.idea
