@@ -318,10 +318,33 @@ def ci_vs_ci(first, second):
 # ------------------------------------------------------------------------------
 
 
+def ms_timescale(mass):
+    """TODO"""
+
+    return solar_lifetime * mass ** (-2.5)
+
+
+def mstp_env_generator(num_itr, num_start, num_end, num_clusters,
+                       min_mass, max_mass):
+
+    data = [[]]
+    itr_range = range(num_start, num_end, num_itr)
+    cluster_range = range(num_clusters)
+
+    i = 0
+    for iteration in itr_range:
+        for _ in cluster_range:
+            data[i].append(cluster_generator(iteration,
+                                                     min_mass,
+                                                     max_mass))
+        i += 1
+
+    return data
+
+
 if __name__ == '__main__':
     min_mass = 0.1
     max_mass = 100
     n_mass = 1000
 
-    sampled_masses = cluster_generator(n_mass, min_mass, max_mass)
-    color_index_scheme(sampled_masses)
+    print(mstp_env_generator(2, n_mass, n_mass+1000, 5, min_mass, max_mass))
